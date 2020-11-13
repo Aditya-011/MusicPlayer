@@ -174,9 +174,9 @@ function addToPlaylist()
   HclickCount++;
   //Add to playlist function goes here
 }
-document.addEventListener('keyup', function(e){
-  if(e.keyCode == 77)
-    window.location.reload();
+let muteCount = 0;
+document.addEventListener('keypress',function(e)
+{
+  if(e.keyCode == 32 )
+  {playpauseTrack()}
 })
-
-
