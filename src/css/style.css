@@ -51,7 +51,11 @@ body {
     background-size: cover;
     border-radius: 15%;
   }
-
+  i 
+  {
+    color: #000000;
+    opacity: 0.8;
+  }
   .now-playing {
     font-size: 0.7rem;
   }
@@ -189,6 +193,7 @@ body {
 .heart i{
   color: #ffffff;
   font-size: 1.5rem;
+  cursor: pointer;
 }
 .repeat i 
 {
@@ -197,3 +202,14 @@ body {
   opacity: 0.8;
 }
 
+
+
+
+.inputfile {
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}

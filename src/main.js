@@ -60,6 +60,7 @@ function random_bg_color() {
 function loadTrack(track_index) {
   clearInterval(updateTimer);
   resetValues();
+ 
   curr_track.src = track_list[track_index].path;
   curr_track.load();
 
@@ -72,7 +73,8 @@ function loadTrack(track_index) {
   curr_track.addEventListener("ended", nextTrack);
   random_bg_color();
 }
-
+function updateIndex()
+{now_playing.textContent = "PLAYING " + (track_index + 1) + " OF " + track_list.length;}
 function resetValues() {
   curr_time.textContent = "00:00";
   total_duration.textContent = "00:00";
@@ -180,3 +182,23 @@ document.addEventListener('keypress',function(e)
   if(e.keyCode == 32 )
   {playpauseTrack()}
 })
+///         Input Styling
+var inputs = document.querySelectorAll('.file-input')
+
+for (var i = 0, len = inputs.length; i < len; i++) {
+  customInput(inputs[i])
+}
+
+function customInput (el) {
+  const fileInput = el.querySelector('[type="file"]')
+  const label = el.querySelector('[data-js-label]')
+  
+  fileInput.onchange =
+  fileInput.onmouseout = function () {
+    if (!fileInput.value) return
+    
+    var value = fileInput.value.replace(/^.*[\\\/]/, '')
+    el.className += ' -chosen'
+    label.innerText = value
+  }
+}
