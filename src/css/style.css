@@ -190,7 +190,8 @@ body {
   }
 .repeat
 {
-  margin: 1rem;
+  margin: 1rem; 
+  cursor: pointer;
 }
 .heart i{
   color: #d3394c;

@@ -23,9 +23,11 @@ let repeatCount = 0;
 // Create new audio element
 let curr_track = document.createElement('audio');
 
+
+
 // Define the tracks that have to be played
 let track_list = [
-  {
+  /*{
     name: "Night Owl",
     image: "https://images.pexels.com/photos/2264753/pexels-photo-2264753.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=250&w=250",
     path: "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/WFMU/Broke_For_Free/Directionless_EP/Broke_For_Free_-_01_-_Night_Owl.mp3"
@@ -40,7 +42,7 @@ let track_list = [
     name: "Shipping Lanes",
     image: "https://images.pexels.com/photos/1717969/pexels-photo-1717969.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=250&w=250",
     path: "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/Chad_Crouch/Arps/Chad_Crouch_-_Shipping_Lanes.mp3",
-  },
+  },*/
 ];
 
 /*function random_bg_color() {
@@ -57,6 +59,9 @@ let track_list = [
   document.body.style.background = bgColor;
 }
 */
+
+
+
 function loadTrack(track_index) {
   clearInterval(updateTimer);
   resetValues();
@@ -73,6 +78,9 @@ function loadTrack(track_index) {
   curr_track.addEventListener("ended", nextTrack);
  // random_bg_color();
 }
+
+
+
 function updateIndex()
 {now_playing.textContent = "PLAYING " + (track_index + 1) + " OF " + track_list.length;}
 function resetValues() {
@@ -81,13 +89,19 @@ function resetValues() {
   seek_slider.value = 0;
 }
 
+
+
 // Load the first track in the tracklist
 loadTrack(track_index);
+
+
 
 function playpauseTrack() {
   if (!isPlaying) playTrack();
   else pauseTrack();
 }
+
+
 
 function playTrack() {
   curr_track.play();
@@ -95,23 +109,30 @@ function playTrack() {
   playpause_btn.innerHTML = '<i class="fa fa-pause-circle fa-5x"></i>';
 }
 
+
+
 function pauseTrack() {
   curr_track.pause();
   isPlaying = false;
   playpause_btn.innerHTML = '<i class="fa fa-play-circle fa-5x"></i>';;
 }
+
+
+
 function repeatTrack()
 {
   if(!(repeatCount%2))
   {
-    repeat.style.color = "#fff"
-  }
-  else{
     repeat.style.color = "#000"
   }
+  else{
+    repeat.style.color = "#fff"
+  }
   repeatCount++;
-  console.log(repeatCount)
+  //console.log(repeatCount)
 }
+
+
 function nextTrack() {
   if(!(repeatCount%2))
   {
@@ -124,6 +145,7 @@ function nextTrack() {
   playTrack();
 }
 
+
 function prevTrack() {
   if (track_index > 0)
     track_index -= 1;
@@ -132,14 +154,19 @@ function prevTrack() {
   playTrack();
 }
 
+
+
 function seekTo() {
   seekto = curr_track.duration * (seek_slider.value / 100);
   curr_track.currentTime = seekto;
 }
 
+
+
 function setVolume() {
   curr_track.volume = volume_slider.value / 100;
 }
+
 
 function seekUpdate() {
   let seekPosition = 0;
@@ -163,7 +190,9 @@ function seekUpdate() {
     total_duration.textContent = durationMinutes + ":" + durationSeconds;
   }
 }
-function addToPlaylist()
+
+
+function removeFromPlaylist()                    
 {
   if(HclickCount%2)
   {
@@ -174,15 +203,25 @@ function addToPlaylist()
     heart.style.color = "#fff";
   }
   HclickCount++;
-  delete track_list[track_index]
-  //Add to playlist function goes here
+  
+
+  removeElement(track_list,track_index)
+  
+  setTimeout(()=> 
+  {
+    heart.style.color = "#f5587b";
+    nextTrack();
+   console.log(track_list.length)
+  }),1800
 }
+
+
 let muteCount = 0;
-document.addEventListener('keypress',function(e)
-{
-  if(e.keyCode == 32 )
-  {playpauseTrack()}
-})
+
+
+
+
+
 ///         Input Styling
 var inputs = document.querySelectorAll('.file-input')
 
@@ -203,3 +242,17 @@ function customInput (el) {
     label.innerText = value
   }
 }
+
+
+function removeElement(array, index) {
+  if (index > -1) {
+      array.splice(index, 1);
+  }
+ 
+}
+
+document.addEventListener('keypress',function(e)
+{
+  if(e.keyCode == 32 )
+  {playpauseTrack()}
+})

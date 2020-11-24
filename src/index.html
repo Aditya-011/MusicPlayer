@@ -45,7 +45,7 @@
             <div class="playpause-track" onclick="playpauseTrack()"><i class="fa fa-play-circle fa-5x"></i></div>
             <div class="next-track" onclick="nextTrack()"><i class="fa fa-step-forward fa-2x"></i></div>
             <div class="repeat" onclick="repeatTrack()"><i class="fas fa-sync-alt"></i></div>
-            <div class="heart" onclick="addToPlaylist()"><i class="fas fa-heart"></i></div>
+            <div class="heart" onclick="removeFromPlaylist()"><i class="fas fa-heart"></i></div>
             
           </div>
           <div class="slider_container">
@@ -83,6 +83,7 @@ input.onchange = function() {
     path : URL.createObjectURL(input.files[0])
   }
   track_list.push(fresh)
+  loadTrack(0)
   now_playing.textContent = "PLAYING " + (track_index + 1) + " OF " + track_list.length;
 
 }
