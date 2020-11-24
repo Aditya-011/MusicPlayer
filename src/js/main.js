@@ -43,7 +43,7 @@ let track_list = [
   },
 ];
 
-function random_bg_color() {
+/*function random_bg_color() {
 
   // Get a number between 64 to 256 (for getting lighter colors)
   let red = Math.floor(Math.random() * 256) + 64;
@@ -56,7 +56,7 @@ function random_bg_color() {
   // Set the background to that color
   document.body.style.background = bgColor;
 }
-
+*/
 function loadTrack(track_index) {
   clearInterval(updateTimer);
   resetValues();
@@ -71,7 +71,7 @@ function loadTrack(track_index) {
 
   updateTimer = setInterval(seekUpdate, 1000);
   curr_track.addEventListener("ended", nextTrack);
-  random_bg_color();
+ // random_bg_color();
 }
 function updateIndex()
 {now_playing.textContent = "PLAYING " + (track_index + 1) + " OF " + track_list.length;}
@@ -167,13 +167,14 @@ function addToPlaylist()
 {
   if(HclickCount%2)
   {
-    heart.style.color = "#fff";
+    heart.style.color = "#f5587b";
   }
   else
   {
-    heart.style.color = "#f5587b";
+    heart.style.color = "#fff";
   }
   HclickCount++;
+  delete track_list[track_index]
   //Add to playlist function goes here
 }
 let muteCount = 0;

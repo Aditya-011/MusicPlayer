@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 body {
-    background-color: lightgreen;
+    background-color: #204056;
     padding: 0;
     margin: 0;
     /* Smoothly transition the background color */
@@ -51,23 +51,24 @@ body {
     background-size: cover;
     border-radius: 15%;
   }
-  i 
-  {
-    color: #000000;
-    opacity: 0.8;
-  }
+
   .now-playing {
     font-size: 0.7rem;
+    color: #fff;
   }
 
   .track-name {
-    font-size: 1rem;
-    font-weight: bold;
+    font-size: 1.2rem;
+    color: #ffffff;
+    letter-spacing: normal;
+    font-weight: 550;
+    margin-left: 0.8rem;
   }
 
   .now-playing
   {
-    font-size: 1.1rem;
+    font-size: 1rem;
+    color: #ffffff;
     margin: 1rem;
   }
 
@@ -81,13 +82,13 @@ body {
     align-items: center;
   }
 
-  i{
-      font-size: 1rem;
-  }
+ .slider_container i{
+  color: #ffffff;
+}  
   .playpause-track, .prev-track, .next-track {
     padding: 0.5rem;
     opacity: 0.8;
-
+    color: #fff;
     /* Smoothly transition the opacity */
     transition: opacity .2s;
   }
@@ -142,6 +143,7 @@ body {
 
   .current-time, .total-duration {
     padding: 10px;
+    color: #ffffff;
   }
 
   i.fa-volume-down, i.fa-volume-up {
@@ -191,13 +193,13 @@ body {
   margin: 1rem;
 }
 .heart i{
-  color: #ffffff;
+  color: #d3394c;
   font-size: 1.5rem;
   cursor: pointer;
 }
 .repeat i 
 {
-  color: #000000;
+  color: #ffffff;
   font-size: 1.5rem;
   opacity: 0.8;
 }
