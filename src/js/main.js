@@ -6,13 +6,12 @@ let track_artist = document.querySelector(".track-artist");
 let playpause_btn = document.querySelector(".playpause-track");
 let next_btn = document.querySelector(".next-track");
 let prev_btn = document.querySelector(".prev-track");
-
 let seek_slider = document.querySelector(".seek_slider");
 let volume_slider = document.querySelector(".volume_slider");
 let curr_time = document.querySelector(".current-time");
 let total_duration = document.querySelector(".total-duration");
 let heart = document.querySelector(".fa-heart");
-let repeat = document.querySelector(".fa-sync-alt")
+let repeat = document.querySelector(".fa-sync-alt");
 
 let track_index = 0;
 let isPlaying = false;
@@ -21,9 +20,7 @@ let HclickCount = 0;
 let repeatCount = 0;
 
 // Create new audio element
-let curr_track = document.createElement('audio');
-
-
+let curr_track = document.createElement("audio");
 
 // Define the tracks that have to be played
 let track_list = [
@@ -45,63 +42,55 @@ let track_list = [
   },*/
 ];
 
-/*function random_bg_color() {
-
-  // Get a number between 64 to 256 (for getting lighter colors)
-  let red = Math.floor(Math.random() * 256) + 64;
-  let green = Math.floor(Math.random() * 256) + 64;
-  let blue = Math.floor(Math.random() * 256) + 64;
-
-  // Construct a color withe the given values
-  let bgColor = "rgb(" + red + "," + green + "," + blue + ")";
-
-  // Set the background to that color
-  document.body.style.background = bgColor;
-}
-*/
-
-
-
 function loadTrack(track_index) {
   clearInterval(updateTimer);
   resetValues();
- 
+
   curr_track.src = track_list[track_index].path;
   curr_track.load();
 
-  track_art.style.backgroundImage = "url(" + track_list[track_index].image + ")";
-  track_name.textContent = track_list[track_index].name;
-  track_artist.textContent = track_list[track_index].artist;
-  now_playing.textContent = "PLAYING " + (track_index + 1) + " OF " + track_list.length;
-
+  updateName();
+  updateIndex();
   updateTimer = setInterval(seekUpdate, 1000);
   curr_track.addEventListener("ended", nextTrack);
- // random_bg_color();
 }
 
-
-
-function updateIndex()
-{now_playing.textContent = "PLAYING " + (track_index + 1) + " OF " + track_list.length;}
+function updateIndex() {
+  if (!track_list.length) {
+    now_playing.textContent = "No Song Found";
+  } else {
+    now_playing.textContent =
+      "PLAYING " + (track_index + 1) + " OF " + track_list.length;
+  }
+}
+function updateName() {
+  if (!track_list.length) {
+    track_name.textContent = "";
+    track_artist.textContent = "";
+    track_art.style.backgroundImage = "url()";
+    console.log(0215);
+  } else {
+    track_name.textContent = track_list[track_index].name;
+    track_artist.textContent = track_list[track_index].artist;
+    track_art.style.backgroundImage =
+      "url(" + track_list[track_index].image + ")";
+  }
+}
 function resetValues() {
   curr_time.textContent = "00:00";
   total_duration.textContent = "00:00";
   seek_slider.value = 0;
 }
-
-
-
+updateName();
 // Load the first track in the tracklist
-loadTrack(track_index);
-
-
+if (track_list.length > 0) {
+  loadTrack(track_index);
+}
 
 function playpauseTrack() {
   if (!isPlaying) playTrack();
   else pauseTrack();
 }
-
-
 
 function playTrack() {
   curr_track.play();
@@ -109,64 +98,47 @@ function playTrack() {
   playpause_btn.innerHTML = '<i class="fa fa-pause-circle fa-5x"></i>';
 }
 
-
-
 function pauseTrack() {
   curr_track.pause();
   isPlaying = false;
-  playpause_btn.innerHTML = '<i class="fa fa-play-circle fa-5x"></i>';;
+  playpause_btn.innerHTML = '<i class="fa fa-play-circle fa-5x"></i>';
 }
 
-
-
-function repeatTrack()
-{
-  if(!(repeatCount%2))
-  {
-    repeat.style.color = "#000"
-  }
-  else{
-    repeat.style.color = "#fff"
+function repeatTrack() {
+  if (!(repeatCount % 2)) {
+    repeat.style.color = "#000";
+  } else {
+    repeat.style.color = "#fff";
   }
   repeatCount++;
   //console.log(repeatCount)
 }
 
-
 function nextTrack() {
-  if(!(repeatCount%2))
-  {
-    if (track_index < track_list.length - 1)
-  track_index += 1;
-  else track_index = 0;
+  if (!(repeatCount % 2)) {
+    if (track_index < track_list.length - 1) track_index += 1;
+    else track_index = 0;
   }
-  
+
   loadTrack(track_index);
   playTrack();
 }
 
-
 function prevTrack() {
-  if (track_index > 0)
-    track_index -= 1;
+  if (track_index > 0) track_index -= 1;
   else track_index = track_list.length;
   loadTrack(track_index);
   playTrack();
 }
-
-
 
 function seekTo() {
   seekto = curr_track.duration * (seek_slider.value / 100);
   curr_track.currentTime = seekto;
 }
 
-
-
 function setVolume() {
   curr_track.volume = volume_slider.value / 100;
 }
-
 
 function seekUpdate() {
   let seekPosition = 0;
@@ -177,82 +149,114 @@ function seekUpdate() {
     seek_slider.value = seekPosition;
 
     let currentMinutes = Math.floor(curr_track.currentTime / 60);
-    let currentSeconds = Math.floor(curr_track.currentTime - currentMinutes * 60);
+    let currentSeconds = Math.floor(
+      curr_track.currentTime - currentMinutes * 60
+    );
     let durationMinutes = Math.floor(curr_track.duration / 60);
-    let durationSeconds = Math.floor(curr_track.duration - durationMinutes * 60);
+    let durationSeconds = Math.floor(
+      curr_track.duration - durationMinutes * 60
+    );
 
-    if (currentSeconds < 10) { currentSeconds = "0" + currentSeconds; }
-    if (durationSeconds < 10) { durationSeconds = "0" + durationSeconds; }
-    if (currentMinutes < 10) { currentMinutes = "0" + currentMinutes; }
-    if (durationMinutes < 10) { durationMinutes = "0" + durationMinutes; }
+    if (currentSeconds < 10) {
+      currentSeconds = "0" + currentSeconds;
+    }
+    if (durationSeconds < 10) {
+      durationSeconds = "0" + durationSeconds;
+    }
+    if (currentMinutes < 10) {
+      currentMinutes = "0" + currentMinutes;
+    }
+    if (durationMinutes < 10) {
+      durationMinutes = "0" + durationMinutes;
+    }
 
     curr_time.textContent = currentMinutes + ":" + currentSeconds;
     total_duration.textContent = durationMinutes + ":" + durationSeconds;
   }
 }
 
-
-function removeFromPlaylist()                    
-{
-  if(HclickCount%2)
-  {
+function removeFromPlaylist() {
+  if (HclickCount % 2) {
     heart.style.color = "#f5587b";
-  }
-  else
-  {
+  } else {
     heart.style.color = "#fff";
   }
   HclickCount++;
-  
 
-  removeElement(track_list,track_index)
-  
-  setTimeout(()=> 
-  {
+  removeElement(track_list, track_index);
+
+  setTimeout(() => {
     heart.style.color = "#f5587b";
     nextTrack();
-   console.log(track_list.length)
-  }),1800
-}
+    console.log(track_list.length);
+  }, 500);
 
+  if (track_list.length == 0) {
+    heart.addEventListener("click", () => {
+      swal({
+        text: "Sorry, the Playlist can't be empty !!!",
+        icon: "warning",
+      });
+    });
+  }
+}
 
 let muteCount = 0;
 
-
-
-
-
 ///         Input Styling
-var inputs = document.querySelectorAll('.file-input')
+var inputs = document.querySelectorAll(".file-input");
 
 for (var i = 0, len = inputs.length; i < len; i++) {
-  customInput(inputs[i])
+  customInput(inputs[i]);
 }
 
-function customInput (el) {
-  const fileInput = el.querySelector('[type="file"]')
-  const label = el.querySelector('[data-js-label]')
-  
-  fileInput.onchange =
-  fileInput.onmouseout = function () {
-    if (!fileInput.value) return
-    
-    var value = fileInput.value.replace(/^.*[\\\/]/, '')
-    el.className += ' -chosen'
-    label.innerText = value
-  }
-}
+function customInput(el) {
+  const fileInput = el.querySelector('[type="file"]');
+  const label = el.querySelector("[data-js-label]");
 
+  fileInput.onchange = fileInput.onmouseout = function () {
+    if (!fileInput.value) return;
+
+    var value = fileInput.value.replace(/^.*[\\\/]/, "");
+    el.className += " -chosen";
+    label.innerText = value;
+  };
+}
 
 function removeElement(array, index) {
   if (index > -1) {
-      array.splice(index, 1);
+    array.splice(index, 1);
   }
- 
 }
 
-document.addEventListener('keypress',function(e)
-{
-  if(e.keyCode == 32 )
-  {playpauseTrack()}
-})
+document.addEventListener("keypress", function (e) {
+  if (e.keyCode == 32) {
+    playpauseTrack();
+  }
+});
+window.addEventListener("load", () => {
+  if (!track_list.length) {
+    now_playing.innerText = "No Song Found";
+    console.log(1);
+  }
+});
+heart.addEventListener("click", () => {
+  swal({
+    text: "Sorry, the Playlist can't be empty !!!",
+    icon: "warning",
+  });
+});
+
+document.addEventListener("keyup", function (e) {
+  if (e.keyCode == 77) {
+    if (muteCount % 2 == 0) {
+      curr_track.muted = true;
+      muteCount++;
+      console.log(true);
+    } else {
+      curr_track.muted = false;
+      muteCount++;
+      console.log(false);
+    }
+  }
+});
