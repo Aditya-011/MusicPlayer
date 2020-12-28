@@ -182,16 +182,18 @@ function removeFromPlaylist() {
     heart.style.color = "#fff";
   }
   HclickCount++;
-
-  removeElement(track_list, track_index);
+  if (track_list.length > 1) {
+    removeElement(track_list, track_index);
+    nextTrack();
+  }
 
   setTimeout(() => {
     heart.style.color = "#f5587b";
-    nextTrack();
+
     console.log(track_list.length);
   }, 500);
 
-  if (track_list.length == 0) {
+  if (track_list.length <= 1) {
     heart.addEventListener("click", () => {
       swal({
         text: "Sorry, the Playlist can't be empty !!!",
@@ -240,12 +242,12 @@ window.addEventListener("load", () => {
     console.log(1);
   }
 });
-heart.addEventListener("click", () => {
+/*heart.addEventListener("click", () => {
   swal({
     text: "Sorry, the Playlist can't be empty !!!",
     icon: "warning",
   });
-});
+});*/
 
 document.addEventListener("keyup", function (e) {
   if (e.keyCode == 77) {
